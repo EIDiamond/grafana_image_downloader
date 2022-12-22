@@ -26,7 +26,7 @@ The instruction is working pretty well with Grafana 9.3.2 and latest
 [Dockerfile](https://github.com/grafana/grafana/blob/05c9af511057b221e50454033ee798df13fbc987/packaging/docker/custom/Dockerfile) 
 
 ### Grafana API Key
-Please generate API Key for the tool. 
+Please generate [API Key](https://grafana.com/docs/grafana/latest/administration/api-keys/) for the tool. 
 
 
 Navigate: Configuration -> API Keys menu 
