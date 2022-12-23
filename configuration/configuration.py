@@ -1,6 +1,7 @@
 from configparser import ConfigParser
 
-from configuration.settings import GrafanaSettings, PanelImageSettings, TempStorageSettings, WatermarkSettings
+from configuration.settings import GrafanaSettings, PanelImageSettings, TempStorageSettings, WatermarkSettings, \
+    TelegramSettings
 
 __all__ = ("ProgramConfiguration")
 
@@ -50,6 +51,12 @@ class ProgramConfiguration:
             margin=int(config["WATERMARK"]["MARGIN"])
         )
 
+        self.__telegram_settings = TelegramSettings(
+            bot_token=config["TELEGRAM"]["BOT_TOKEN"],
+            chat_id=config["TELEGRAM"]["CHAT_ID"],
+            image_description=config["TELEGRAM"]["IMAGE_DESCRIPTION"]
+        )
+
     @property
     def grafana_settings(self) -> GrafanaSettings:
         return self.__grafana_settings
@@ -65,3 +72,7 @@ class ProgramConfiguration:
     @property
     def watermark_settings(self) -> WatermarkSettings:
         return self.__watermark_settings
+
+    @property
+    def telegram_settings(self) -> TelegramSettings:
+        return self.__telegram_settings

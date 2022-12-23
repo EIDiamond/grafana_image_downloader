@@ -7,6 +7,7 @@ from logging.handlers import RotatingFileHandler
 
 from configuration.configuration import ProgramConfiguration
 from grafana.image_downloader import GrafanaImageDownloader
+from tg.telegram_service import TelegramService
 from watermark.watermark_draw import WatermarkDraw
 
 # the configuration file name
@@ -56,28 +57,55 @@ if __name__ == '__main__':
         )
         logger.info("Configuration has been loaded")
 
-        logger.info(f"Grafana: {config.grafana_settings};"
-                    f" Panel: {config.panel_image_settings};"
-                    f" temp storage: {config.temp_storage_settings};"
-                    f" watermark: {config.watermark_settings}")
+        logger.info(f"Grafana: {config.grafana_settings};")
+        logger.info(f"Panel: {config.panel_image_settings};")
+        logger.info(f"Temp storage: {config.temp_storage_settings};")
+        logger.info(f"Watermark: {config.watermark_settings};")
+        logger.info(f"Telegram: {config.telegram_settings}.")
 
-        downloader = GrafanaImageDownloader(config.grafana_settings)
-        logger.info("Grafana downloader has been created")
-
-        watermark = WatermarkDraw(config.watermark_settings)
-        logger.info("Watermark has been created")
-        
         try:
-            logger.info(f"Download image to: {config.temp_storage_settings.file_path}")
+            downloader = GrafanaImageDownloader(config.grafana_settings)
+            logger.info("Grafana downloader has been created")
 
-            file_path = downloader.download(config.panel_image_settings, config.temp_storage_settings.file_path)
+            downloader.download(config.panel_image_settings, config.temp_storage_settings.file_path)
+            print(f"Image has been downloaded: {config.temp_storage_settings.file_path}")
 
-            if file_path and config.watermark_settings.text:
-                watermark.draw(file_path)
+            if config.watermark_settings.text:
+                try:
+                    watermark = WatermarkDraw(config.watermark_settings)
+                    logger.info("Watermark has been created")
+
+                    watermark.draw(config.temp_storage_settings.file_path)
+                except Exception as ex:
+                    logger.error(f"Draw watermark error has been occurred: {repr(ex)}")
+                    print(f"Draw watermark error has been occurred: {repr(ex)}")
+                else:
+                    print(f"Watermark has been added")
+
+            if config.telegram_settings.bot_token and config.telegram_settings.chat_id:
+                try:
+                    telegram = TelegramService(
+                        token=config.telegram_settings.bot_token,
+                        chat_id=config.telegram_settings.chat_id
+                    )
+                    logger.info("TelegramService has been created")
+
+                    telegram.send_image_message(
+                        image_path=config.temp_storage_settings.file_path,
+                        text_description=config.telegram_settings.image_description
+                    )
+                except Exception as ex:
+                    logger.error(f"Telegram message error has been occurred: {repr(ex)}")
+                    print(f"Telegram message error has been occurred: {repr(ex)}")
+                else:
+                    print(f"Telegram message has been sent")
+
         except Exception as ex:
             logger.error(f"Download error has been occurred: {repr(ex)}")
+            print(f"Download error has been occurred: {repr(ex)}")
 
     except Exception as ex:
         logger.error(f"Error has been occurred: {repr(ex)}")
+        print(f"Error has been occurred: {repr(ex)}")
 
     logger.info("Program has been finished.")

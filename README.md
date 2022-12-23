@@ -1,11 +1,13 @@
 ## Description
-Render and download Grafana panel image by using 
-[Grafana Image Renderer](https://grafana.com/grafana/plugins/grafana-image-renderer/) plugin. 
+Download Grafana panel image by using 
+[Grafana Image Renderer](https://grafana.com/grafana/plugins/grafana-image-renderer/) plugin 
+and send it to Telegram chat or channel. 
 
 ## Features
 - Request to render image for specified Grafana panel
 - Download the requested image
-- Add watermark to image
+- (Optional) Add watermark to image 
+- (Optional) Send image to Telegram chat or channel
 
 ## Dependencies
 - [Requests project](https://pypi.org/project/requests/)
@@ -17,6 +19,11 @@ $ pip install requests
 <!-- termynal -->
 ```
 $ pip install pillow
+```
+- [Pillow project](https://github.com/python-telegram-bot/python-telegram-bot)
+<!-- termynal -->
+```
+$ pip install python-telegram-bot
 ```
 
 ## Grafana requirements
@@ -62,6 +69,11 @@ Specify settings to add watermark on panel image:
 - `TEXT` - watermark text. Keep empty to disable functionality.
 - `FONT` and `FONT_SIZE` - text font settings. 
 - `MARGIN` - margin size for watermark
+### Section TELEGRAM
+Specify settings to send image to Telegram chat or channel:
+- `BOT_TOKEN` - telegram bot token.
+- `CHAT_ID` - id of chat or channel. 
+- `IMAGE_DESCRIPTION` - optional description for image
 
 ## Command line arguments 
 - `--dashboard` - dashboard uid
@@ -71,7 +83,17 @@ Specify settings to add watermark on panel image:
 - `--file` - path to file
 
 ## Watermark
+Watermark is optional and can be disabled if `TEXT` (watermark text) is empty.
+
+
 Watermark is drawing in the bottom right corner. 
+
+## Telegram
+Telegram is optional and can be disabled if `BOT_TOKEN` and\or `CHAT_ID` are empty.
+
+
+Telegram bot can be easily created in a few seconds via @BotFather.  
+Please note the easiest way to find [chat_id](https://stackoverflow.com/a/56546442).  
 
 ## Logging
 All logs are written in logs/downloader.log.

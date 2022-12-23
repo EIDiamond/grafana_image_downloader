@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-__all__ = ("GrafanaSettings", "PanelImageSettings", "TempStorageSettings", "WatermarkSettings")
+__all__ = ("GrafanaSettings", "PanelImageSettings", "TempStorageSettings", "WatermarkSettings", "TelegramSettings")
 
 
 @dataclass(eq=False, repr=True)
@@ -33,3 +33,10 @@ class WatermarkSettings:
     font: str
     font_size: int
     margin: int
+
+
+@dataclass(eq=False, repr=True)
+class TelegramSettings:
+    bot_token: str
+    chat_id: str
+    image_description: str
