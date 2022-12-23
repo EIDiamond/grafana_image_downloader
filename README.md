@@ -20,7 +20,7 @@ $ pip install requests
 ```
 $ pip install pillow
 ```
-- [Pillow project](https://github.com/python-telegram-bot/python-telegram-bot)
+- [python-telegram-bot project](https://github.com/python-telegram-bot/python-telegram-bot)
 <!-- termynal -->
 ```
 $ pip install python-telegram-bot
