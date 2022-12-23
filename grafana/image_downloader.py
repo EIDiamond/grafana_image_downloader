@@ -1,5 +1,6 @@
 import logging
 import shutil
+from typing import Optional
 
 import requests
 
@@ -21,7 +22,7 @@ class GrafanaImageDownloader:
             self,
             panel_image: PanelImageSettings,
             file_path: str
-    ) -> None:
+    ) -> Optional[str]:
         try:
             request = requests.get(
                 url=f"http://{self.__grafana_settings.host}:{self.__grafana_settings.port}/render/d-solo/"
@@ -43,5 +44,8 @@ class GrafanaImageDownloader:
 
         except Exception as ex:
             logger.error(f"Request exception: {repr(ex)}")
+
+        else:
+            return file_path
 
         return None

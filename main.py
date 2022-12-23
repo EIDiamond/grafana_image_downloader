@@ -7,6 +7,7 @@ from logging.handlers import RotatingFileHandler
 
 from configuration.configuration import ProgramConfiguration
 from grafana.image_downloader import GrafanaImageDownloader
+from watermark.watermark_draw import WatermarkDraw
 
 # the configuration file name
 CONFIG_FILE = "settings.ini"
@@ -57,15 +58,22 @@ if __name__ == '__main__':
 
         logger.info(f"Grafana: {config.grafana_settings};"
                     f" Panel: {config.panel_image_settings};"
-                    f" temp storage: {config.temp_storage_settings}")
+                    f" temp storage: {config.temp_storage_settings};"
+                    f" watermark: {config.watermark_settings}")
 
         downloader = GrafanaImageDownloader(config.grafana_settings)
         logger.info("Grafana downloader has been created")
+
+        watermark = WatermarkDraw(config.watermark_settings)
+        logger.info("Watermark has been created")
         
         try:
             logger.info(f"Download image to: {config.temp_storage_settings.file_path}")
 
-            downloader.download(config.panel_image_settings, config.temp_storage_settings.file_path)
+            file_path = downloader.download(config.panel_image_settings, config.temp_storage_settings.file_path)
+
+            if file_path and config.watermark_settings.text:
+                watermark.draw(file_path)
         except Exception as ex:
             logger.error(f"Download error has been occurred: {repr(ex)}")
 

@@ -1,16 +1,22 @@
 ## Description
-Render and download Grafana panel as image by using 
+Render and download Grafana panel image by using 
 [Grafana Image Renderer](https://grafana.com/grafana/plugins/grafana-image-renderer/) plugin. 
 
 ## Features
 - Request to render image for specified Grafana panel
 - Download the requested image
+- Add watermark to image
 
 ## Dependencies
 - [Requests project](https://pypi.org/project/requests/)
 <!-- termynal -->
 ```
 $ pip install requests
+```
+- [Pillow project](https://pypi.org/project/Pillow/)
+<!-- termynal -->
+```
+$ pip install pillow
 ```
 
 ## Grafana requirements
@@ -51,6 +57,11 @@ Specify settings and panel to render:
 ### Section TEMP_STORAGE
 Specify file path to save rendered image. 
 Note: Directory must be created. 
+### Section WATERMARK
+Specify settings to add watermark on panel image:
+- `TEXT` - watermark text. Keep empty to disable functionality.
+- `FONT` and `FONT_SIZE` - text font settings. 
+- `MARGIN` - margin size for watermark
 
 ## Command line arguments 
 - `--dashboard` - dashboard uid
@@ -58,6 +69,9 @@ Note: Directory must be created.
 - `--f` - from date
 - `--t` - to date
 - `--file` - path to file
+
+## Watermark
+Watermark is drawing in the bottom right corner. 
 
 ## Logging
 All logs are written in logs/downloader.log.

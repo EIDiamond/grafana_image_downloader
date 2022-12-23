@@ -1,6 +1,6 @@
 from configparser import ConfigParser
 
-from configuration.settings import GrafanaSettings, PanelImageSettings, TempStorageSettings
+from configuration.settings import GrafanaSettings, PanelImageSettings, TempStorageSettings, WatermarkSettings
 
 __all__ = ("ProgramConfiguration")
 
@@ -43,6 +43,13 @@ class ProgramConfiguration:
             to_date=arg_to if arg_to else config["PANEL_IMAGE"]["TO_DATE"]
         )
 
+        self.__watermark_settings = WatermarkSettings(
+            text=config["WATERMARK"]["TEXT"],
+            font=config["WATERMARK"]["FONT"],
+            font_size=int(config["WATERMARK"]["FONT_SIZE"]),
+            margin=int(config["WATERMARK"]["MARGIN"])
+        )
+
     @property
     def grafana_settings(self) -> GrafanaSettings:
         return self.__grafana_settings
@@ -54,3 +61,7 @@ class ProgramConfiguration:
     @property
     def panel_image_settings(self) -> PanelImageSettings:
         return self.__panel_image_settings
+
+    @property
+    def watermark_settings(self) -> WatermarkSettings:
+        return self.__watermark_settings

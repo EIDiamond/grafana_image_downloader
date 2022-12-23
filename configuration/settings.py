@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-__all__ = ("GrafanaSettings", "PanelImageSettings", "TempStorageSettings")
+__all__ = ("GrafanaSettings", "PanelImageSettings", "TempStorageSettings", "WatermarkSettings")
 
 
 @dataclass(eq=False, repr=True)
@@ -25,3 +25,11 @@ class PanelImageSettings:
 @dataclass(eq=False, repr=True)
 class TempStorageSettings:
     file_path: str
+
+
+@dataclass(eq=False, repr=True)
+class WatermarkSettings:
+    text: str
+    font: str
+    font_size: int
+    margin: int
