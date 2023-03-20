@@ -44,6 +44,8 @@ Please generate [API Key](https://grafana.com/docs/grafana/latest/administration
 
 Navigate: Configuration -> API Keys menu 
 
+### HOW TO: Grafana installation 
+[Here](HOW_TO_grafana_installations.md)
 
 ## Tested environment
 - Python 3.10 
