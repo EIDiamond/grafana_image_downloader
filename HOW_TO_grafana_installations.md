@@ -1,4 +1,4 @@
-Additional information about installations Grafana with image renderer plugin. 
+Additional information about installation Grafana with image renderer plugin. 
 
 ## Thank you
 Thank you for sharing and contribution:
@@ -12,17 +12,31 @@ I had to figure out why - the answer was in the grafana log (/var/log/grafana/gr
 After several tries I found what libraries are missing:
 
 libnss3.so
+
+
 libatk-1.0.so.0
+
+
 libatk-bridge-2.0.so.0
+
 libcups.so.2
+
 libxkbcommon.so.0
+
 libXcomposite.so.1
+
 libXdamage.so.1
+
 libXfixes.so.3
+
 libXrandr.so.2
+
 libgbm.so.1
+
 libpango-1.0.so.0
+
 libasound.so.2
+
 In your system the best way - see all missing libraries by command:
 ldd /var/lib/grafana/plugins/grafana-image-renderer/chrome-linux/chrome
 
@@ -37,11 +51,12 @@ Add repo to helm:
 
 Install Grafana with image renderer plugin: 
 ```helm install grafana-i-r grafana/grafana --set imageRenderer.enabled=true```
-My recommendation also to set the following parameters:
+
+My recommendation is set the following parameters also:
 - --set persistence.enabled=true
 - --set persistence.size=1Gi
 - --set service.clusterIP={Your static clustered IP for Grafana} 
 
-- Fow more information please refer the helm chart [documentation](https://artifacthub.io/packages/helm/grafana/grafana#configuration)
+Fow more information please refer the helm chart [documentation](https://artifacthub.io/packages/helm/grafana/grafana#configuration)
 
 
