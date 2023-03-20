@@ -23,7 +23,7 @@ $ pip install pillow
 - [python-telegram-bot project](https://github.com/python-telegram-bot/python-telegram-bot)
 <!-- termynal -->
 ```
-$ pip install python-telegram-bot
+$ pip install python-telegram-bot==13.15
 ```
 
 ## Grafana requirements
